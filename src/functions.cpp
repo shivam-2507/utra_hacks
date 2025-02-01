@@ -26,3 +26,10 @@ string getColorMath(int red, int blue, int green) {
 
     return finalColor;
 }
+
+int inProximity (int ultrasonic_measurement){
+    if ((ultrasonic_measurement) < 0.1){
+        return 1;
+    }
+    return 0;
+}
