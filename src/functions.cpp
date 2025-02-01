@@ -1,15 +1,28 @@
-#include <vector>
 #include <string>
 #include <iostream>
+#include <cmath>
+#include <algorithm>
 using namespace std;
 
-string getColor(vector<int> color) {
+string getColorMath(int red, int blue, int green) {
 
-    string finalColor;
+    string finalColor = "none";
 
-    vector<int> redVector = {255, 0, 0};
-    vector<int> blueVector = {0, 255, 0};
-    vector<int> blueVector = {0, 0, 255};
+    double redDistance = hypot(red - 255, green, blue);
+    double blueDistance = hypot(red, green, blue-255);
+    double greenDistance = hypot(red, green - 255, blue);
+
+    int smallest_dist = min(redDistance, blueDistance, greenDistance);
+
+    if (smallest_dist == redDistance) {
+        finalColor = "red";
+    }
+    if (smallest_dist == blueDistance) {
+        finalColor = "blue";
+    }
+    if (smallest_dist == greenDistance) {
+        finalColor = "green";
+    }
 
     return finalColor;
 }
