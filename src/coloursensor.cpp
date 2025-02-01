@@ -1,31 +1,37 @@
 #include <Arduino.h>
 
-// Define TCS230 pins
-const int S0 = 4;
-const int S1 = 5;
-const int S2 = 6;
-const int S3 = 7;
-const int sensorOut = 8;
+// Define color sensor pins
+#define S0 4
+#define S1 5
+#define S2 6
+#define S3 7
+#define sensorOut 8
 
-unsigned long redFrequency, greenFrequency, blueFrequency;
+// Calibration Values from the previous sketch
+int redMin = 20;  // Example calibration minimum
+int redMax = 700; // Example calibration maximum
+int greenMin = 30;
+int greenMax = 700;
+int blueMin = 25;
+int blueMax = 650;
 
-int mapFrequencyToRGB(unsigned long frequency)
+int redValue, greenValue, blueValue;
+
+int readColorPulseWidth(bool s2State, bool s3State)
 {
-    // Map frequencies to RGB range (0-255)
-    frequency = constrain(frequency, 500, 60000); // Define frequency limits
-    return map(frequency, 60000, 500, 0, 255);
+    digitalWrite(S2, s2State);
+    digitalWrite(S3, s3State);
+    return pulseIn(sensorOut, LOW);
 }
 
 void setup()
 {
-    // Pin setup
     pinMode(S0, OUTPUT);
     pinMode(S1, OUTPUT);
     pinMode(S2, OUTPUT);
     pinMode(S3, OUTPUT);
     pinMode(sensorOut, INPUT);
 
-    // Set frequency scaling to 20% (reduces noise)
     digitalWrite(S0, HIGH);
     digitalWrite(S1, LOW);
 
@@ -34,28 +40,16 @@ void setup()
 
 void loop()
 {
-    // Read Red component
-    digitalWrite(S2, LOW);
-    digitalWrite(S3, LOW);
-    redFrequency = pulseIn(sensorOut, LOW);
+    redValue = map(readColorPulseWidth(LOW, LOW), redMin, redMax, 255, 0);
+    greenValue = map(readColorPulseWidth(HIGH, HIGH), greenMin, greenMax, 255, 0);
+    blueValue = map(readColorPulseWidth(LOW, HIGH), blueMin, blueMax, 255, 0);
 
-    // Read Green component
-    digitalWrite(S2, HIGH);
-    digitalWrite(S3, HIGH);
-    greenFrequency = pulseIn(sensorOut, LOW);
-
-    // Read Blue component
-    digitalWrite(S2, LOW);
-    digitalWrite(S3, HIGH);
-    blueFrequency = pulseIn(sensorOut, LOW);
-
-    // Print RGB values as frequency
-    Serial.print("Red: ");
-    Serial.print(mapFrequencyToRGB(redFrequency));
-    Serial.print("  Green: ");
-    Serial.print(mapFrequencyToRGB(greenFrequency));
-    Serial.print("  Blue: ");
-    Serial.println(mapFrequencyToRGB(blueFrequency));
+    Serial.print("R: ");
+    Serial.print(redValue);
+    Serial.print(" G: ");
+    Serial.print(greenValue);
+    Serial.print(" B: ");
+    Serial.println(blueValue);
 
     delay(500);
 }
