@@ -3,9 +3,10 @@
 int trigPin = 11; // Trigger
 int echoPin = 12; // Echo
 long duration, cm, inches;
+int distance_threshold = 2;
 
 int inProximity (int ultrasonic_measurement){
-    if ((ultrasonic_measurement) < 0.1){
+    if ((ultrasonic_measurement) <= distance_threshold){
         return 1;
     }
     return 0;
@@ -42,9 +43,12 @@ void loop()
 
     Serial.print(inches);
     Serial.print("in, ");
-    Serial.print(cm);
-    if 
-    Serial.print("cm");
+    if (inProximity(inches)){
+        Serial.print("need to turn");
+    }
+    else {
+        Serial.print("keep going straight");
+    }
     Serial.println();
 
     delay(250);
