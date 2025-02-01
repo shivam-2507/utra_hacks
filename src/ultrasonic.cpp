@@ -4,6 +4,13 @@ int trigPin = 11; // Trigger
 int echoPin = 12; // Echo
 long duration, cm, inches;
 
+int inProximity (int ultrasonic_measurement){
+    if ((ultrasonic_measurement) < 0.1){
+        return 1;
+    }
+    return 0;
+}
+
 void setup()
 {
     // Serial Port begin
@@ -36,6 +43,7 @@ void loop()
     Serial.print(inches);
     Serial.print("in, ");
     Serial.print(cm);
+    if 
     Serial.print("cm");
     Serial.println();
 
