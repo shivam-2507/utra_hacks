@@ -1,16 +1,8 @@
 // #include <Arduino.h>
 
-int trigPin = 11; // Trigger
-int echoPin = 12; // Echo
-long duration, cm, inches;
-int distance_threshold = 2;
-
-int inProximity (int ultrasonic_measurement){
-    if ((ultrasonic_measurement) <= distance_threshold){
-        return 1;
-    }
-    return 0;
-}
+// int trigPin = A1; // Trigger
+// int echoPin = A0; // Echo
+// long duration, cm, inches;
 
 // void setup()
 // {
@@ -41,15 +33,11 @@ int inProximity (int ultrasonic_measurement){
 //     cm = (duration / 2) / 29.1;   // Divide by 29.1 or multiply by 0.0343
 //     inches = (duration / 2) / 74; // Divide by 74 or multiply by 0.0135
 
-    Serial.print(inches);
-    Serial.print("in, ");
-    if (inProximity(inches)){
-        Serial.print("need to turn");
-    }
-    else {
-        Serial.print("keep going straight");
-    }
-    Serial.println();
+//     Serial.print(inches);
+//     Serial.print("in, ");
+//     Serial.print(cm);
+//     Serial.print("cm");
+//     Serial.println();
 
 //     delay(250);
 // }
