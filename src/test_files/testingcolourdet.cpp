@@ -17,8 +17,8 @@
 //     // Setup sensor pins
 //     pinMode(S0, OUTPUT);
 //     pinMode(S1, OUTPUT);
-//     pinMode(S2, OUTPUT);
 //     pinMode(S3, OUTPUT);
+//     pinMode(S2, OUTPUT);
 //     pinMode(sensorOut, INPUT);
 
 //     // Set frequency scaling to 20%
@@ -97,5 +97,5 @@
 //     Serial.print(" - Detected Color: ");
 //     Serial.println(color);
 
-//     delay(500); // Small delay before next reading
+//     delay(500);
 // }
